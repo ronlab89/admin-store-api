@@ -2,8 +2,8 @@ import express from "express";
 import {
   register,
   login,
-  infoUser,
-  refreshToken,
+  info,
+  refresh,
   logout,
 } from "../../controllers/auth.controller.js";
 import { requireToken } from "../../middlewares/requireToken.js";
@@ -18,8 +18,8 @@ const router = express.Router();
 router
   .post("/register", bodyRegisterValidations, register)
   .post("/login", bodyLoginValidations, login)
-  .get("/user", requireToken, infoUser)
-  .post("/refreshToken", requireRefreshToken, refreshToken)
+  .get("/user", requireToken, info)
+  .post("/refreshToken", requireRefreshToken, refresh)
   .post("/logout", logout);
 
 export default router;
