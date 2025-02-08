@@ -19,13 +19,11 @@ const register = async (req, res) => {
     );
     if (createdUser === "Exists")
       throw new Error("Ya existe este email asociado a un usuario registrado.");
-    return res
-      .status(201)
-      .json({
-        ok: true,
-        message: "El usuario ha sido creado.",
-        data: createdUser,
-      });
+    return res.status(201).json({
+      ok: true,
+      message: "El usuario ha sido creado.",
+      data: createdUser,
+    });
   } catch (error) {
     console.log(error);
     res.status(400).json({ error, message: error.message });
@@ -34,7 +32,7 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  // console.log('Llega: ', email, password)
+  // console.log("Llega: ", email, password);
   try {
     const logged = await loginUser(email, password, res);
     if (logged === "notUser")

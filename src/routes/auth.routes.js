@@ -19,7 +19,7 @@ router
   .post("/register", bodyRegisterValidations, register)
   .post("/login", bodyLoginValidations, login)
   .get("/user", requireToken, info)
-  .post("/refreshToken", requireRefreshToken, refresh)
+  .post("/refresh-token", requireRefreshToken, refresh)
   .post("/logout", logout);
 
 export default router;

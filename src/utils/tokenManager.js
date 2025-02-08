@@ -25,10 +25,10 @@ export const refreshTokenGenerate = (uid, res) => {
       secure: isProduction,
       domain: isProduction ? process.env.ORIGIN : "localhost",
       expires: new Date(Date.now() + expiresIn * 1000),
-      path: "/",
+      // path: "/",
     });
 
-    res.json({ ok: true, message: "Refresh token generado" });
+    // res.json({ ok: true, message: "Refresh token generado" });
   } catch (error) {
     console.error("Error al generar el refresh token:", error);
     res.status(500).json({ ok: false, message: "Error interno del servidor" });
