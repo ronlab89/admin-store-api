@@ -52,8 +52,9 @@ PORT=5000
 MONGO_URI=mongodb://localhost:27017/dashboardDB
 JWT_SECRET=tu_secreto_jwt
 JWT_REFRESH=tu_secreto_refresh
-MODO=developer
-ORIGIN1=agrega los origin que necesites
+NODE_ENV=development
+ORIGIN=url_producción
+ORIGIN1=url_desarrollo
 ```
 
 4. **Inicia el servidor en modo desarrollo:**

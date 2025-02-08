@@ -3,7 +3,7 @@ import "./database/connectdb.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
-import v1AuthRouter from "./v1/routes/auth.routes.js";
+import v1AuthRouter from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -14,7 +14,12 @@ app.get("/", (req, res) => {
 app.use(
   cors({
     credentials: true,
-    origin: [process.env.ORIGIN1, process.env.ORIGIN2, process.env.ORIGIN3],
+    origin: [
+      process.env.ORIGIN,
+      process.env.ORIGIN1,
+      process.env.ORIGIN2,
+      process.env.ORIGIN3,
+    ],
   })
 );
 app.use(cookieParser());
