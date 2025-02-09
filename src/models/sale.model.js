@@ -21,8 +21,14 @@ const saleSchema = new Schema({
         type: Number,
         required: true,
       },
+      default: {},
+      _id: false,
     },
   ],
+  customer: {
+    type: Schema.Types.ObjectId,
+    ref: "Customer",
+  },
   total_amount: {
     type: Number,
     required: true,
