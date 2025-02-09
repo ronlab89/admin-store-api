@@ -9,6 +9,7 @@ import v1ProductRouter from "./routes/product.routes.js";
 import v1SupplierRouter from "./routes/supplier.routes.js";
 import v1SaleRouter from "./routes/sale.routes.js";
 import v1PurchaseRouter from "./routes/purchase.routes.js";
+import v1ExpenseRouter from "./routes/expense.routes.js";
 
 const app = express();
 
@@ -36,6 +37,7 @@ app.use("/api/v1/products", v1ProductRouter);
 app.use("/api/v1/suppliers", v1SupplierRouter);
 app.use("/api/v1/sales", v1SaleRouter);
 app.use("/api/v1/purchases", v1PurchaseRouter);
+app.use("/api/v1/expenses", v1ExpenseRouter);
 
 const PORT = process.env.PORT || 7000;
 app.listen(

@@ -15,6 +15,10 @@ const expenseSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "ExpenseCategory",
   },
+  payment_method: {
+    type: Schema.Types.ObjectId,
+    ref: "PaymentMethod",
+  },
   events_history: {
     expense_created_at: {
       type: Date,
