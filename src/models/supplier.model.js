@@ -23,8 +23,6 @@ const supplierSchema = new Schema({
     country: { type: String },
     country_code: { type: String },
     zip: { type: String },
-    latitude: { type: Number },
-    longitude: { type: Number },
     default: {},
   },
   events_history: {
