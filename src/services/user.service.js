@@ -22,7 +22,15 @@ const userById = async (id) => {
   }
 };
 
-const userUpdate = async (name, surname, email, role, id) => {
+const userUpdate = async (
+  name,
+  surname,
+  email,
+  role,
+  date,
+  updating_user,
+  id
+) => {
   try {
     const user = await User.findById(id);
     if (!user) return user;
@@ -34,6 +42,12 @@ const userUpdate = async (name, surname, email, role, id) => {
           surname,
           email,
           role,
+        },
+        $push: {
+          "events_history.user_edited_at": {
+            date,
+            updating_user,
+          },
         },
       },
       { returnDocument: "after", new: true }

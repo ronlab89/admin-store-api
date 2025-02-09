@@ -35,10 +35,26 @@ const user = async (req, res) => {
 };
 
 const update = async (req, res) => {
-  const { name, surname, email, role } = req.body;
+  const {
+    name,
+    surname,
+    email,
+    role,
+    events_history: {
+      user_edited_at: { date, updating_user },
+    },
+  } = req.body;
   const { id } = req.params;
   try {
-    const updated = await userUpdate(name, surname, email, role, id);
+    const updated = await userUpdate(
+      name,
+      surname,
+      email,
+      role,
+      date,
+      updating_user,
+      id
+    );
     if (!updated)
       throw new Error(
         "El usuario que intenta actualizar no fue encontrado en la base de datos"
