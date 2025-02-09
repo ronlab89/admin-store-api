@@ -4,6 +4,7 @@ import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
 import v1AuthRouter from "./routes/auth.routes.js";
+import v1UserRouter from "./routes/user.routes.js";
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(cookieParser());
 app.use(express.json({ limit: "50mb" }));
 
 app.use("/api/v1/auth", v1AuthRouter);
+app.use("/api/v1/user", v1UserRouter);
 
 const PORT = process.env.PORT || 7000;
 app.listen(
