@@ -12,6 +12,7 @@ import v1PurchaseRouter from "./routes/purchase.routes.js";
 import v1ExpenseRouter from "./routes/expense.routes.js";
 import v1CustomerRouter from "./routes/customer.routes.js";
 import v1ProductCategoryRouter from "./routes/productCategory.routes.js";
+import v1PaymentMethodRouter from "./routes/paymentMethod.routes.js";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use("/api/v1/purchases", v1PurchaseRouter);
 app.use("/api/v1/expenses", v1ExpenseRouter);
 app.use("/api/v1/customers", v1CustomerRouter);
 app.use("/api/v1/product-category", v1ProductCategoryRouter);
+app.use("/api/v1/payment-method", v1PaymentMethodRouter);
 
 const PORT = process.env.PORT || 7000;
 app.listen(
