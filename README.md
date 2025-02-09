@@ -2,7 +2,7 @@
 
 ## 🚀 Descripción
 
-Esta es una API RESTful desarrollada con **Node.js**, **Express** y **MongoDB** para gestionar un **Dashboard Administrativo** destinado a pequeños negocios. Permite administrar productos, finanzas, inventario, compras y ventas, gestionar sesiones de usuario, generar reportes y personalizar la aplicación mediante configuraciones.
+Esta es una API RESTful desarrollada con **Node.js**, **Express** y **MongoDB** para gestionar un **Dashboard Administrativo** destinado a pequeños negocios. Permite administrar productos, clientes, inventario, compras y ventas, empleados, sesion de usuario con tokens JWT, notificaciones, reportes y configuración.
 
 ---
 
@@ -70,39 +70,7 @@ npm run dev
 
 ## 📡 Endpoints Principales
 
-**🔐 Autenticación**  
-Registrar usuario:
-POST /api/auth/register
-Iniciar sesión:
-POST /api/auth/login
-
-**📦 Productos**
-Listar productos:
-GET /api/products
-Crear producto:
-POST /api/products
-Actualizar producto:
-PUT /api/products/:id
-Eliminar producto:
-DELETE /api/products/:id
-
-**🛒 Ventas & Compras**
-Registrar venta:
-POST /api/sales
-Registrar compra:
-POST /api/purchases
-
-**📊 Reportes**
-Obtener resumen financiero:
-GET /api/reports/summary
-
-**⚙️ Configuración**
-Obtener configuración actual:
-GET /api/settings
-Actualizar configuración:
-PUT /api/settings
-
-Para ver todos los endpoints, consulta la documentación completa en Swagger o Postman.
+Para ver todos los endpoints, consulta la documentación completa en Postman.
 
 ## 🛡 Seguridad
 
@@ -112,15 +80,15 @@ Validaciones de datos: Evitar inconsistencias en la base de datos.
 
 ## 🎯 Roadmap & Mejoras Futuras
 
-Integración con servicios de pago.
-Generación automática de reportes en PDF.
-Dashboard visual con gráficas en tiempo real.
-Integración con proveedores externos para facturación electrónica.
+- Integración con servicios de pago.
+- Generación automática de reportes en PDF.
+- Integración con proveedores externos para facturación electrónica.
 
 ## 🤝 Contribuciones
 
-¡Toda contribución es bienvenida! Para colaborar:
+¡Toda contribución es bienvenida!
 
+**Para colaborar:**
 Realiza un fork del repositorio.
 Crea una rama (feature/nueva-funcionalidad).
 Envía un pull request con tus mejoras.
