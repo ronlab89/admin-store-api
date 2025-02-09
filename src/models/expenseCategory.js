@@ -2,34 +2,19 @@ import mongoose from "mongoose";
 
 const { Schema } = mongoose;
 
-const productSchema = new Schema({
+const expenseCategorySchema = new Schema({
   name: {
     type: String,
     required: true,
     trim: true,
+    unique: true,
   },
   description: {
     type: String,
     trim: true,
   },
-  price: {
-    type: Number,
-    required: true,
-  },
-  stock: {
-    type: Number,
-    required: true,
-  },
-  category: {
-    type: Schema.Types.ObjectId,
-    ref: "ProductCategory",
-  },
-  supplier: {
-    type: Schema.Types.ObjectId,
-    ref: "Supplier",
-  },
   events_history: {
-    product_created_at: {
+    expenseCategory_created_at: {
       type: Date,
       required: true,
       default: Date.now,
@@ -38,7 +23,7 @@ const productSchema = new Schema({
       type: Schema.Types.ObjectId,
       ref: "User",
     },
-    product_updated_at: [
+    expenseCategory_updated_at: [
       {
         date: {
           type: Date,
@@ -55,4 +40,7 @@ const productSchema = new Schema({
   },
 });
 
-export const Product = mongoose.model("product", productSchema);
+export const ExpenseCategory = mongoose.model(
+  "expenseCategory",
+  expenseCategorySchema
+);
