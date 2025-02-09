@@ -21,6 +21,8 @@ const purchaseSchema = new Schema({
         type: Number,
         required: true,
       },
+      default: {},
+      _id: false,
     },
   ],
   total_amount: {

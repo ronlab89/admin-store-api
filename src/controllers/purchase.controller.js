@@ -1,15 +1,15 @@
 import {
-  saleList,
-  saleById,
-  saleCreate,
-  saleUpdate,
-  saleRemove,
-} from "../services/sale.service.js";
+  purchaseList,
+  purchaseById,
+  purchaseCreate,
+  purchaseUpdate,
+  purchaseRemove,
+} from "../services/purchase.service.js";
 
 const list = async (req, res) => {
   try {
-    const allSales = await saleList();
-    return res.status(200).json({ allSales });
+    const allPurchases = await purchaseList();
+    return res.status(200).json({ allPurchases });
   } catch (error) {
     console.log(error);
     return res
@@ -18,15 +18,15 @@ const list = async (req, res) => {
   }
 };
 
-const sale = async (req, res) => {
+const purchase = async (req, res) => {
   try {
     const { id } = req.params;
-    const sale = await saleById(id);
+    const purchase = await purchaseById(id);
 
-    if (!sale) {
-      return res.status(404).json({ error: "Venta no encontrada" });
+    if (!purchase) {
+      return res.status(404).json({ error: "Compra no encontrada" });
     }
-    return res.status(200).json({ sale });
+    return res.status(200).json({ purchase });
   } catch (error) {
     console.log(error);
     return res
@@ -36,11 +36,11 @@ const sale = async (req, res) => {
 };
 
 const create = async (req, res) => {
-  const { customerId, products, total_amount, payment_method, events_history } =
+  const { supplierId, products, total_amount, payment_method, events_history } =
     req.body;
   try {
-    const created = await saleCreate(
-      customerId,
+    const created = await purchaseCreate(
+      supplierId,
       products,
       total_amount,
       payment_method,
@@ -48,7 +48,7 @@ const create = async (req, res) => {
     );
     return res.status(201).json({
       ok: true,
-      message: "La venta se ha registrado correctamente",
+      message: "La compra se ha registrado correctamente",
       data: created,
     });
   } catch (error) {
@@ -59,18 +59,18 @@ const create = async (req, res) => {
 
 const update = async (req, res) => {
   const {
-    customerId,
+    supplierId,
     products,
     total_amount,
     payment_method,
     events_history: {
-      sale_updated_at: { date, updating_user },
+      purchase_updated_at: { date, updating_user },
     },
   } = req.body;
   const { id } = req.params;
   try {
-    const updated = await saleUpdate(
-      customerId,
+    const updated = await purchaseUpdate(
+      supplierId,
       products,
       total_amount,
       payment_method,
@@ -80,11 +80,11 @@ const update = async (req, res) => {
     );
     if (!updated)
       throw new Error(
-        "La venta que intenta actualizar no fue encontrada en la base de datos"
+        "La compra que intenta actualizar no fue encontrada en la base de datos"
       );
     return res.status(200).json({
       ok: true,
-      message: "La venta se ha actualizado correctamente",
+      message: "La compra se ha actualizado correctamente",
       updated,
     });
   } catch (error) {
@@ -96,14 +96,14 @@ const update = async (req, res) => {
 const remove = async (req, res) => {
   const { id } = req.params;
   try {
-    const deleted = await saleRemove(id);
+    const deleted = await purchaseRemove(id);
     if (!deleted)
       throw new Error(
-        "La venta que desea eliminar no se encontro en la base de datos"
+        "La compra que desea eliminar no se encontro en la base de datos"
       );
     return res.status(200).json({
       ok: true,
-      message: "La venta se ha eliminado correctamente",
+      message: "La compra se ha eliminado correctamente",
       deleted,
     });
   } catch (error) {
@@ -112,4 +112,4 @@ const remove = async (req, res) => {
   }
 };
 
-export { list, sale, create, update, remove };
+export { list, purchase, create, update, remove };

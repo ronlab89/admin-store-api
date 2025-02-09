@@ -23,18 +23,16 @@ const saleById = async (id) => {
 };
 
 const saleCreate = async (
-  userId,
+  customerId,
   products,
-  customer,
   total_amount,
   payment_method,
   events_history
 ) => {
   try {
     const sale = new Sale({
-      userId,
+      customerId,
       products,
-      customer,
       total_amount,
       payment_method,
       events_history,
@@ -47,9 +45,8 @@ const saleCreate = async (
 };
 
 const saleUpdate = async (
-  userId,
+  customerId,
   products,
-  customer,
   total_amount,
   payment_method,
   date,
@@ -63,9 +60,8 @@ const saleUpdate = async (
       id,
       {
         $set: {
-          userId,
+          customerId,
           products,
-          customer,
           total_amount,
           payment_method,
         },

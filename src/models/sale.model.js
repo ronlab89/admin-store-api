@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 
 const saleSchema = new Schema({
-  userId: {
+  customerId: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
@@ -25,10 +25,6 @@ const saleSchema = new Schema({
       _id: false,
     },
   ],
-  customer: {
-    type: Schema.Types.ObjectId,
-    ref: "Customer",
-  },
   total_amount: {
     type: Number,
     required: true,
