@@ -3,6 +3,10 @@ import "./database/connectdb.js";
 import express from "express";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { Server } from "socket.io";
+import { createServer } from "node:http";
+import setupSocket from "./socket.js";
+
 import v1AuthRouter from "./routes/auth.routes.js";
 import v1UserRouter from "./routes/user.routes.js";
 import v1ProductRouter from "./routes/product.routes.js";
@@ -16,6 +20,18 @@ import v1PaymentMethodRouter from "./routes/paymentMethod.routes.js";
 import v1ExpenseCategoryRouter from "./routes/expenseCategory.routes.js";
 
 const app = express();
+const server = createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: [
+      process.env.ORIGIN,
+      process.env.ORIGIN1,
+      process.env.ORIGIN2,
+      process.env.ORIGIN3,
+    ],
+    methods: ["GET", "POST"],
+  },
+});
 
 app.get("/", (req, res) => {
   res.status(200).json({ ok: true, server: "running" });
@@ -47,8 +63,9 @@ app.use("/api/v1/product-category", v1ProductCategoryRouter);
 app.use("/api/v1/payment-method", v1PaymentMethodRouter);
 app.use("/api/v1/expense-category", v1ExpenseCategoryRouter);
 
+setupSocket(io);
+
 const PORT = process.env.PORT || 7000;
-app.listen(
-  PORT,
-  console.log("🚀 Server listen on port http://localhost:" + PORT)
-);
+server.listen(PORT, () => {
+  console.log("🚀 Server listen on port http://localhost:" + PORT);
+});

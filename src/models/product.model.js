@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import { ProductCategory } from "./productCategory.model.js";
+import { Supplier } from "./supplier.model.js";
+import { User } from "./user.model.js";
 
 const { Schema } = mongoose;
 
@@ -18,15 +21,15 @@ const productSchema = new Schema({
   },
   stock: {
     type: Number,
-    required: true,
+    default: 0,
   },
   category: {
     type: Schema.Types.ObjectId,
-    ref: "ProductCategory",
+    ref: ProductCategory,
   },
   supplier: {
     type: Schema.Types.ObjectId,
-    ref: "Supplier",
+    ref: Supplier,
   },
   events_history: {
     product_created_at: {
@@ -36,7 +39,7 @@ const productSchema = new Schema({
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: User,
     },
     product_updated_at: [
       {
@@ -46,7 +49,7 @@ const productSchema = new Schema({
         },
         updating_user: {
           type: Schema.Types.ObjectId,
-          ref: "User",
+          ref: User,
         },
         defaul: {},
         _id: false,

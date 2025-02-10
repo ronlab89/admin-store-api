@@ -20,7 +20,7 @@ const productCategorySchema = new Schema({
       default: Date.now,
     },
     user: {
-      type: Schema.Types.ObjectId,
+      type: mongoose.Schema.Types.ObjectId,
       ref: "User",
     },
     productCategory_updated_at: [
