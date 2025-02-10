@@ -32,7 +32,6 @@ const register = async (req, res) => {
 
 const login = async (req, res) => {
   const { email, password } = req.body;
-  // console.log("Llega: ", email, password);
   try {
     const logged = await loginUser(email, password, res);
     if (logged === "notUser")

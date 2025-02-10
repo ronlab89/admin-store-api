@@ -33,8 +33,8 @@ const loginUser = async (email, password, res) => {
     if (!user) return "notUser";
     const resPassword = await user.comparePassword(password);
     if (!resPassword) return "notPassword";
-    const { token, expiresIn } = tokenGenerate(user.id);
-    refreshTokenGenerate(user.id, res);
+    const { token, expiresIn } = tokenGenerate(user._id);
+    refreshTokenGenerate(user._id, res);
     return { email: user.email, token, expiresIn };
   } catch (error) {
     console.log(error.message);
