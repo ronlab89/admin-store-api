@@ -2,7 +2,33 @@ import { Purchase } from "../models/purchase.model.js";
 
 const purchaseList = async () => {
   try {
-    const allPurchases = await Purchase.find().lean(true);
+    const populateSupplier = {
+      path: "supplierId",
+      select: "name contactInfo address _id",
+    };
+    const populateProducts = {
+      path: "products",
+      select: "productId quantity price _id",
+    };
+    const populatePaymentMethod = {
+      path: "payment_method",
+      select: "name description _id",
+    };
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.purchase_updated_at.updating_user",
+      select: "name surname email role",
+    };
+    const allPurchases = await Purchase.find()
+      .populate(populateSupplier)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allPurchases;
   } catch (error) {
     console.log(error);

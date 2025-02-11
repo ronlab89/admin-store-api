@@ -2,7 +2,33 @@ import { Sale } from "../models/sale.model.js";
 
 const saleList = async () => {
   try {
-    const allSales = await Sale.find().lean(true);
+    const populateCustomer = {
+      path: "customerId",
+      select: "name surname email phone address _id",
+    };
+    const populateProducts = {
+      path: "products",
+      select: "productId quantity price _id",
+    };
+    const populatePaymentMethod = {
+      path: "payment_method",
+      select: "name description _id",
+    };
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.sale_updated_at.updating_user",
+      select: "name surname email role",
+    };
+    const allSales = await Sale.find()
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .populate(populateCustomer)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .lean(true);
     return allSales;
   } catch (error) {
     console.log(error);

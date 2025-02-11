@@ -2,7 +2,19 @@ import { Customer } from "../models/customer.model.js";
 
 const customerList = async () => {
   try {
-    const allCustomers = await Customer.find().lean(true);
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.customer_updated_at.updating_user",
+      select: "name surname email role",
+    };
+
+    const allCustomers = await Customer.find()
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allCustomers;
   } catch (error) {
     console.log(error);

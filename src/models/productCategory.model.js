@@ -1,4 +1,5 @@
 import mongoose from "mongoose";
+import { User } from "./user.model.js";
 
 const { Schema } = mongoose;
 
@@ -21,7 +22,7 @@ const productCategorySchema = new Schema({
     },
     user: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
+      ref: User,
     },
     productCategory_updated_at: [
       {
@@ -31,7 +32,7 @@ const productCategorySchema = new Schema({
         },
         updating_user: {
           type: Schema.Types.ObjectId,
-          ref: "User",
+          ref: User,
         },
         defaul: {},
         _id: false,

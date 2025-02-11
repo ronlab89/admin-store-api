@@ -1,4 +1,7 @@
 import mongoose from "mongoose";
+import { ExpenseCategory } from "./expenseCategory.model.js";
+import { PaymentMethod } from "./paymentMethod.model.js";
+import { User } from "./user.model.js";
 
 const { Schema } = mongoose;
 
@@ -13,11 +16,11 @@ const expenseSchema = new Schema({
   },
   category: {
     type: Schema.Types.ObjectId,
-    ref: "ExpenseCategory",
+    ref: ExpenseCategory,
   },
   payment_method: {
     type: Schema.Types.ObjectId,
-    ref: "PaymentMethod",
+    ref: PaymentMethod,
   },
   events_history: {
     expense_created_at: {
@@ -27,7 +30,7 @@ const expenseSchema = new Schema({
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: User,
     },
     expense_updated_at: [
       {
@@ -37,7 +40,7 @@ const expenseSchema = new Schema({
         },
         updating_user: {
           type: Schema.Types.ObjectId,
-          ref: "User",
+          ref: User,
         },
         defaul: {},
         _id: false,

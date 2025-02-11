@@ -2,7 +2,19 @@ import { ProductCategory } from "../models/productCategory.model.js";
 
 const productCategoryList = async () => {
   try {
-    const allProductCategorys = await ProductCategory.find().lean(true);
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.productCategory_updated_at.updating_user",
+      select: "name surname email role",
+    };
+
+    const allProductCategorys = await ProductCategory.find()
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allProductCategorys;
   } catch (error) {
     console.log(error);

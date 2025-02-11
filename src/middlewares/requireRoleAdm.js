@@ -6,7 +6,7 @@ export const UserRole = async (req, res, next) => {
     const role = user.role;
     if (role === "empleado")
       throw new Error("No tiene permisos para hacer esta operacion");
-    if (role === "administrador") return next();
+    if (role === "administrador" || role === "supervisor") return next();
   } catch (error) {
     console.log(error);
     return res.status(400).json({ error: error.message });

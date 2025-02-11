@@ -2,7 +2,18 @@ import { ExpenseCategory } from "../models/expenseCategory.model.js";
 
 const expenseCategoryList = async () => {
   try {
-    const allExpenseCategorys = await ExpenseCategory.find().lean(true);
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.expenseCategory_updated_at.updating_user",
+      select: "name surname email role",
+    };
+    const allExpenseCategorys = await ExpenseCategory.find()
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allExpenseCategorys;
   } catch (error) {
     console.log(error);

@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import bcrypt from "bcryptjs";
+import { User } from "./user.model.js";
 
 const { Schema } = mongoose;
 
@@ -41,12 +41,12 @@ const customerSchema = new mongoose.Schema({
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: User,
     },
     customer_updated_at: [
       {
         date: { type: Date },
-        updating_user: { type: Schema.Types.ObjectId, ref: "User" },
+        updating_user: { type: Schema.Types.ObjectId, ref: User },
         default: {},
         _id: false,
       },

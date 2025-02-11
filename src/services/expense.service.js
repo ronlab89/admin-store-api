@@ -2,7 +2,29 @@ import { Expense } from "../models/expense.model.js";
 
 const expenseList = async () => {
   try {
-    const allExpenses = await Expense.find().lean(true);
+    const expenseCategory = {
+      path: "category",
+      select: "name description _id",
+    };
+    const populatePaymentMethod = {
+      path: "payment_method",
+      select: "name description _id",
+    };
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.user_edited_at.updating_user",
+      select: "name surname email role",
+    };
+
+    const allExpenses = await Expense.find()
+      .populate(expenseCategory)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allExpenses;
   } catch (error) {
     console.log(error);

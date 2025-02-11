@@ -1,17 +1,21 @@
 import mongoose from "mongoose";
+import { PaymentMethod } from "./paymentMethod.model.js";
+import { Product } from "./product.model.js";
+import { Supplier } from "./supplier.model.js";
+import { User } from "./user.model.js";
 
 const { Schema } = mongoose;
 
 const purchaseSchema = new Schema({
   supplierId: {
     type: Schema.Types.ObjectId,
-    ref: "Supplier",
+    ref: Supplier,
   },
   products: [
     {
       productId: {
         type: Schema.Types.ObjectId,
-        ref: "Product",
+        ref: Product,
       },
       quantity: {
         type: Number,
@@ -31,7 +35,7 @@ const purchaseSchema = new Schema({
   },
   payment_method: {
     type: Schema.Types.ObjectId,
-    ref: "PaymentMethod",
+    ref: PaymentMethod,
   },
   events_history: {
     purchase_created_at: {
@@ -41,7 +45,7 @@ const purchaseSchema = new Schema({
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "User",
+      ref: User,
     },
     purchase_updated_at: [
       {
@@ -51,7 +55,7 @@ const purchaseSchema = new Schema({
         },
         updating_user: {
           type: Schema.Types.ObjectId,
-          ref: "User",
+          ref: User,
         },
         defaul: {},
         _id: false,

@@ -21,7 +21,11 @@ const registerUser = async (
       events_history,
     });
     await user.save();
-    return user;
+    const userWithoutPassword = await User.findById(user._id)
+      .select("-password")
+      .select("-__v")
+      .lean();
+    return userWithoutPassword;
   } catch (error) {
     console.log(error.message);
   }

@@ -2,7 +2,20 @@ import { User } from "../models/user.model.js";
 
 const userList = async () => {
   try {
-    const allUsers = await User.find().select("-password").lean(true);
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.user_edited_at.updating_user",
+      select: "name surname email role",
+    };
+
+    const allUsers = await User.find()
+      .select("-password")
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allUsers;
   } catch (error) {
     console.log(error);

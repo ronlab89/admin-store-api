@@ -2,7 +2,18 @@ import { Supplier } from "../models/supplier.model.js";
 
 const supplierList = async () => {
   try {
-    const allSuppliers = await Supplier.find().lean(true);
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.supplier_updated_at.updating_user",
+      select: "name surname email role",
+    };
+    const allSuppliers = await Supplier.find()
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allSuppliers;
   } catch (error) {
     console.log(error);

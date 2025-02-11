@@ -16,7 +16,7 @@ import {
 const router = express.Router();
 
 router
-  .post("/register", bodyRegisterValidations, register)
+  .post("/register", bodyRegisterValidations, requireToken, register)
   .post("/login", bodyLoginValidations, login)
   .get("/user", requireToken, info)
   .post("/refresh-token", requireRefreshToken, refresh)

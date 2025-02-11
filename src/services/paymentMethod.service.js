@@ -2,7 +2,18 @@ import { PaymentMethod } from "../models/paymentMethod.model.js";
 
 const paymentMethodList = async () => {
   try {
-    const allPaymentMethods = await PaymentMethod.find().lean(true);
+    const populateUser = {
+      path: "events_history.user",
+      select: "name surname email role",
+    };
+    const populateUserEditing = {
+      path: "events_history.paymentMethod_updated_at.updating_user",
+      select: "name surname email role",
+    };
+    const allPaymentMethods = await PaymentMethod.find()
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     return allPaymentMethods;
   } catch (error) {
     console.log(error);
