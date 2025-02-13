@@ -55,6 +55,7 @@ const create = async (req, res) => {
       supplier,
       events_history
     );
+    console.log({ created });
     if (created === "Exists")
       throw new Error("Ya existe este producto en la base de datos");
     return res.status(201).json({
@@ -73,7 +74,6 @@ const update = async (req, res) => {
     name,
     description,
     price,
-    stock,
     category,
     supplier,
     events_history: {
@@ -86,7 +86,6 @@ const update = async (req, res) => {
       name,
       description,
       price,
-      stock,
       category,
       supplier,
       date,

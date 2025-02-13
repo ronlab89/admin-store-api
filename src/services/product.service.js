@@ -2,7 +2,23 @@ import { Product } from "../models/product.model.js";
 
 const productList = async () => {
   try {
-    const allProducts = await Product.find().lean(true);
+    const populateCategory = {
+      path: "category",
+      select: "name",
+    };
+    const populateSupplier = {
+      path: "supplier",
+      select: "name",
+    };
+    const populateUser = {
+      path: "events_history.user",
+      select: "name",
+    };
+    const allProducts = await Product.find()
+      .populate(populateCategory)
+      .populate(populateSupplier)
+      .populate(populateUser)
+      .lean(true);
     return allProducts;
   } catch (error) {
     console.log(error);
@@ -32,6 +48,18 @@ const productCreate = async (
   events_history
 ) => {
   try {
+    const populateCategory = {
+      path: "category",
+      select: "name",
+    };
+    const populateSupplier = {
+      path: "supplier",
+      select: "name",
+    };
+    const populateUser = {
+      path: "events_history.user",
+      select: "name",
+    };
     let product = await Product.findOne({ name });
     if (product !== null) return "Exists";
     product = new Product({
@@ -44,7 +72,12 @@ const productCreate = async (
       events_history,
     });
     await product.save();
-    return product;
+    const productUpdate = await Product.findById(product._id)
+      .populate(populateCategory)
+      .populate(populateSupplier)
+      .populate(populateUser)
+      .lean(true);
+    return productUpdate;
   } catch (error) {
     console.log(error.message);
   }
@@ -54,7 +87,6 @@ const productUpdate = async (
   name,
   description,
   price,
-  stock,
   category,
   supplier,
   date,
@@ -62,6 +94,18 @@ const productUpdate = async (
   id
 ) => {
   try {
+    const populateCategory = {
+      path: "category",
+      select: "name",
+    };
+    const populateSupplier = {
+      path: "supplier",
+      select: "name",
+    };
+    const populateUser = {
+      path: "events_history.user",
+      select: "name",
+    };
     const product = await Product.findById(id);
     if (!product) return product;
     const updateProduct = await Product.findByIdAndUpdate(
@@ -71,7 +115,6 @@ const productUpdate = async (
           name,
           description,
           price,
-          stock,
           category,
           supplier,
         },
@@ -84,7 +127,12 @@ const productUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateProduct;
+    const productPopulated = await Product.findById(updateProduct._id)
+      .populate(populateCategory)
+      .populate(populateSupplier)
+      .populate(populateUser)
+      .lean(true);
+    return productPopulated;
   } catch (error) {
     console.log(error);
   }
