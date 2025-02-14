@@ -1,27 +1,28 @@
 import { Sale } from "../models/sale.model.js";
 
+const populateCustomer = {
+  path: "customerId",
+  select: "name surname email phone address _id",
+};
+const populateProducts = {
+  path: "products",
+  select: "productId quantity price _id",
+};
+const populatePaymentMethod = {
+  path: "payment_method",
+  select: "name description _id",
+};
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.sale_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const saleList = async () => {
   try {
-    const populateCustomer = {
-      path: "customerId",
-      select: "name surname email phone address _id",
-    };
-    const populateProducts = {
-      path: "products",
-      select: "productId quantity price _id",
-    };
-    const populatePaymentMethod = {
-      path: "payment_method",
-      select: "name description _id",
-    };
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.sale_updated_at.updating_user",
-      select: "name surname email role",
-    };
     const allSales = await Sale.find()
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -37,7 +38,13 @@ const saleList = async () => {
 
 const saleById = async (id) => {
   try {
-    const sale = await Sale.findById(id).lean(true);
+    const sale = await Sale.findById(id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .populate(populateCustomer)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .lean(true);
     if (!sale) {
       return null;
     }
@@ -64,7 +71,14 @@ const saleCreate = async (
       events_history,
     });
     await sale.save();
-    return sale;
+    const salePopulated = await Sale.findById(sale._id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .populate(populateCustomer)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .lean();
+    return salePopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -100,7 +114,14 @@ const saleUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateSale;
+    const salePopulated = await Sale.findById(updateSale._id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .populate(populateCustomer)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .lean();
+    return salePopulated;
   } catch (error) {
     console.log(error);
   }

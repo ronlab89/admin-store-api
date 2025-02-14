@@ -1,15 +1,16 @@
 import { ExpenseCategory } from "../models/expenseCategory.model.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.expenseCategory_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const expenseCategoryList = async () => {
   try {
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.expenseCategory_updated_at.updating_user",
-      select: "name surname email role",
-    };
     const allExpenseCategorys = await ExpenseCategory.find()
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -22,7 +23,10 @@ const expenseCategoryList = async () => {
 
 const expenseCategoryById = async (id) => {
   try {
-    const expenseCategory = await ExpenseCategory.findById(id).lean(true);
+    const expenseCategory = await ExpenseCategory.findById(id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!expenseCategory) {
       return null;
     }
@@ -43,7 +47,13 @@ const expenseCategoryCreate = async (name, description, events_history) => {
       events_history,
     });
     await expenseCategory.save();
-    return expenseCategory;
+    const expenseCategoryPopulated = await ExpenseCategory.findById(
+      expenseCategory._id
+    )
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return expenseCategoryPopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -75,7 +85,13 @@ const expenseCategoryUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateExpenseCategory;
+    const expenseCategoryPopulated = await ExpenseCategory.findById(
+      updateExpenseCategory._id
+    )
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return expenseCategoryPopulated;
   } catch (error) {
     console.log(error);
   }

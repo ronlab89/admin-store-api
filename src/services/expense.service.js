@@ -1,24 +1,24 @@
 import { Expense } from "../models/expense.model.js";
 
+const expenseCategory = {
+  path: "category",
+  select: "name description _id",
+};
+const populatePaymentMethod = {
+  path: "payment_method",
+  select: "name description _id",
+};
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.user_edited_at.updating_user",
+  select: "name surname email role",
+};
+
 const expenseList = async () => {
   try {
-    const expenseCategory = {
-      path: "category",
-      select: "name description _id",
-    };
-    const populatePaymentMethod = {
-      path: "payment_method",
-      select: "name description _id",
-    };
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.user_edited_at.updating_user",
-      select: "name surname email role",
-    };
-
     const allExpenses = await Expense.find()
       .populate(expenseCategory)
       .populate(populatePaymentMethod)
@@ -33,7 +33,12 @@ const expenseList = async () => {
 
 const expenseById = async (id) => {
   try {
-    const expense = await Expense.findById(id).lean(true);
+    const expense = await Expense.findById(id)
+      .populate(expenseCategory)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!expense) {
       return null;
     }
@@ -60,7 +65,13 @@ const expenseCreate = async (
       events_history,
     });
     await expense.save();
-    return expense;
+    const expensePopulated = await Expense.findById(expense._id)
+      .populate(expenseCategory)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
+    return expensePopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -96,7 +107,13 @@ const expenseUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateExpense;
+    const expensePopulated = await Expense.findById(updateExpense._id)
+      .populate(expenseCategory)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
+    return expensePopulated;
   } catch (error) {
     console.log(error);
   }

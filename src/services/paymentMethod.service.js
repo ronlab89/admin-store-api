@@ -1,15 +1,16 @@
 import { PaymentMethod } from "../models/paymentMethod.model.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.paymentMethod_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const paymentMethodList = async () => {
   try {
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.paymentMethod_updated_at.updating_user",
-      select: "name surname email role",
-    };
     const allPaymentMethods = await PaymentMethod.find()
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -22,7 +23,10 @@ const paymentMethodList = async () => {
 
 const paymentMethodById = async (id) => {
   try {
-    const paymentMethod = await PaymentMethod.findById(id).lean(true);
+    const paymentMethod = await PaymentMethod.findById(id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!paymentMethod) {
       return null;
     }
@@ -43,7 +47,13 @@ const paymentMethodCreate = async (name, description, events_history) => {
       events_history,
     });
     await paymentMethod.save();
-    return paymentMethod;
+    const paymentMethodPopulated = await PaymentMethod.findById(
+      paymentMethod._id
+    )
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return paymentMethodPopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -75,7 +85,13 @@ const paymentMethodUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updatePaymentMethod;
+    const paymentMethodPopulated = await PaymentMethod.findById(
+      updatePaymentMethod._id
+    )
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return paymentMethodPopulated;
   } catch (error) {
     console.log(error);
   }

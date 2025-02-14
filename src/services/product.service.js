@@ -1,19 +1,20 @@
 import { Product } from "../models/product.model.js";
 
+const populateCategory = {
+  path: "category",
+  select: "name",
+};
+const populateSupplier = {
+  path: "supplier",
+  select: "name",
+};
+const populateUser = {
+  path: "events_history.user",
+  select: "name",
+};
+
 const productList = async () => {
   try {
-    const populateCategory = {
-      path: "category",
-      select: "name",
-    };
-    const populateSupplier = {
-      path: "supplier",
-      select: "name",
-    };
-    const populateUser = {
-      path: "events_history.user",
-      select: "name",
-    };
     const allProducts = await Product.find()
       .populate(populateCategory)
       .populate(populateSupplier)
@@ -27,7 +28,11 @@ const productList = async () => {
 
 const productById = async (id) => {
   try {
-    const product = await Product.findById(id).lean(true);
+    const product = await Product.findById(id)
+      .populate(populateCategory)
+      .populate(populateSupplier)
+      .populate(populateUser)
+      .lean(true);
     if (!product) {
       return null;
     }
@@ -48,18 +53,6 @@ const productCreate = async (
   events_history
 ) => {
   try {
-    const populateCategory = {
-      path: "category",
-      select: "name",
-    };
-    const populateSupplier = {
-      path: "supplier",
-      select: "name",
-    };
-    const populateUser = {
-      path: "events_history.user",
-      select: "name",
-    };
     let product = await Product.findOne({ name });
     if (product !== null) return "Exists";
     product = new Product({
@@ -94,18 +87,6 @@ const productUpdate = async (
   id
 ) => {
   try {
-    const populateCategory = {
-      path: "category",
-      select: "name",
-    };
-    const populateSupplier = {
-      path: "supplier",
-      select: "name",
-    };
-    const populateUser = {
-      path: "events_history.user",
-      select: "name",
-    };
     const product = await Product.findById(id);
     if (!product) return product;
     const updateProduct = await Product.findByIdAndUpdate(

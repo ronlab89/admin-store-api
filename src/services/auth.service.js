@@ -1,6 +1,15 @@
 import { User } from "../models/user.model.js";
 import { refreshTokenGenerate, tokenGenerate } from "../utils/tokenManager.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.user_edited_at.updating_user",
+  select: "name surname email role",
+};
+
 const registerUser = async (
   name,
   surname,
@@ -28,6 +37,8 @@ const registerUser = async (
     const userWithoutPassword = await User.findById(user._id)
       .select("-password")
       .select("-__v")
+      .populate(populateUser)
+      .populate(populateUserEditing)
       .lean();
     return userWithoutPassword;
   } catch (error) {
@@ -54,6 +65,8 @@ const infoUser = async (req) => {
     const user = await User.findById(req.uid)
       .select("-password")
       .select("-__v")
+      .populate(populateUser)
+      .populate(populateUserEditing)
       .lean();
     return user;
   } catch (error) {

@@ -1,15 +1,16 @@
 import { Supplier } from "../models/supplier.model.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.supplier_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const supplierList = async () => {
   try {
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.supplier_updated_at.updating_user",
-      select: "name surname email role",
-    };
     const allSuppliers = await Supplier.find()
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -22,7 +23,10 @@ const supplierList = async () => {
 
 const supplierById = async (id) => {
   try {
-    const supplier = await Supplier.findById(id).lean(true);
+    const supplier = await Supplier.findById(id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!supplier) {
       return null;
     }
@@ -44,7 +48,11 @@ const supplierCreate = async (name, contactInfo, address, events_history) => {
       events_history,
     });
     await supplier.save();
-    return supplier;
+    const supplierPopulated = await Supplier.findById(supplier._id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return supplierPopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -78,7 +86,11 @@ const supplierUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateSupplier;
+    const supplierPopulated = await Supplier.findById(updateSupplier._id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return supplierPopulated;
   } catch (error) {
     console.log(error);
   }

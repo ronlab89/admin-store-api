@@ -1,27 +1,28 @@
 import { Purchase } from "../models/purchase.model.js";
 
+const populateSupplier = {
+  path: "supplierId",
+  select: "name contactInfo address _id",
+};
+const populateProducts = {
+  path: "products",
+  select: "productId quantity price _id",
+};
+const populatePaymentMethod = {
+  path: "payment_method",
+  select: "name description _id",
+};
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.purchase_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const purchaseList = async () => {
   try {
-    const populateSupplier = {
-      path: "supplierId",
-      select: "name contactInfo address _id",
-    };
-    const populateProducts = {
-      path: "products",
-      select: "productId quantity price _id",
-    };
-    const populatePaymentMethod = {
-      path: "payment_method",
-      select: "name description _id",
-    };
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.purchase_updated_at.updating_user",
-      select: "name surname email role",
-    };
     const allPurchases = await Purchase.find()
       .populate(populateSupplier)
       .populate(populateProducts)
@@ -37,7 +38,13 @@ const purchaseList = async () => {
 
 const purchaseById = async (id) => {
   try {
-    const purchase = await Purchase.findById(id).lean(true);
+    const purchase = await Purchase.findById(id)
+      .populate(populateSupplier)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!purchase) {
       return null;
     }
@@ -64,7 +71,14 @@ const purchaseCreate = async (
       events_history,
     });
     await purchase.save();
-    return purchase;
+    const purchasePopulated = await Purchase.findById(purchase._id)
+      .populate(populateSupplier)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return purchasePopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -100,7 +114,14 @@ const purchaseUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updatePurchase;
+    const purchasePopulated = await Purchase.findById(updatePurchase._id)
+      .populate(populateSupplier)
+      .populate(populateProducts)
+      .populate(populatePaymentMethod)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return purchasePopulated;
   } catch (error) {
     console.log(error);
   }

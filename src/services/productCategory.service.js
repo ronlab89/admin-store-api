@@ -1,16 +1,16 @@
 import { ProductCategory } from "../models/productCategory.model.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.productCategory_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const productCategoryList = async () => {
   try {
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.productCategory_updated_at.updating_user",
-      select: "name surname email role",
-    };
-
     const allProductCategorys = await ProductCategory.find()
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -23,7 +23,10 @@ const productCategoryList = async () => {
 
 const productCategoryById = async (id) => {
   try {
-    const productCategory = await ProductCategory.findById(id).lean(true);
+    const productCategory = await ProductCategory.findById(id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!productCategory) {
       return null;
     }
@@ -44,7 +47,13 @@ const productCategoryCreate = async (name, description, events_history) => {
       events_history,
     });
     await productCategory.save();
-    return productCategory;
+    const productCategoryPopulated = await ProductCategory.findById(
+      productCategory._id
+    )
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return productCategoryPopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -76,7 +85,13 @@ const productCategoryUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateProductCategory;
+    const productCategoryPopulated = await ProductCategory.findById(
+      updateProductCategory._id
+    )
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return productCategoryPopulated;
   } catch (error) {
     console.log(error);
   }

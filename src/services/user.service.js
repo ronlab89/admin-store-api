@@ -1,16 +1,16 @@
 import { User } from "../models/user.model.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.user_edited_at.updating_user",
+  select: "name surname email role",
+};
+
 const userList = async () => {
   try {
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.user_edited_at.updating_user",
-      select: "name surname email role",
-    };
-
     const allUsers = await User.find()
       .select("-password")
       .populate(populateUser)
@@ -24,7 +24,11 @@ const userList = async () => {
 
 const userById = async (id) => {
   try {
-    const user = await User.findById(id).select("-password").lean(true);
+    const user = await User.findById(id)
+      .select("-password")
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!user) {
       return null;
     }
@@ -69,7 +73,12 @@ const userUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateUser;
+    const userPopulated = await User.findById(updateUser._id)
+      .select("-password")
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return userPopulated;
   } catch (error) {
     console.log(error);
   }

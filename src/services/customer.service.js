@@ -1,16 +1,16 @@
 import { Customer } from "../models/customer.model.js";
 
+const populateUser = {
+  path: "events_history.user",
+  select: "name surname email role",
+};
+const populateUserEditing = {
+  path: "events_history.customer_updated_at.updating_user",
+  select: "name surname email role",
+};
+
 const customerList = async () => {
   try {
-    const populateUser = {
-      path: "events_history.user",
-      select: "name surname email role",
-    };
-    const populateUserEditing = {
-      path: "events_history.customer_updated_at.updating_user",
-      select: "name surname email role",
-    };
-
     const allCustomers = await Customer.find()
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -23,7 +23,10 @@ const customerList = async () => {
 
 const customerById = async (id) => {
   try {
-    const customer = await Customer.findById(id).lean(true);
+    const customer = await Customer.findById(id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean(true);
     if (!customer) {
       return null;
     }
@@ -54,7 +57,11 @@ const customerCreate = async (
       events_history,
     });
     await customer.save();
-    return customer;
+    const customerPopulated = await Customer.findById(customer._id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return customerPopulated;
   } catch (error) {
     console.log(error.message);
   }
@@ -92,7 +99,11 @@ const customerUpdate = async (
       },
       { returnDocument: "after", new: true }
     );
-    return updateCustomer;
+    const customerPopulated = await Customer.findById(updateCustomer._id)
+      .populate(populateUser)
+      .populate(populateUserEditing)
+      .lean();
+    return customerPopulated;
   } catch (error) {
     console.log(error);
   }
