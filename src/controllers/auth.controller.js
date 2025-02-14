@@ -7,12 +7,23 @@ import {
 } from "../services/auth.service.js";
 
 const register = async (req, res) => {
-  const { name, surname, email, password, role, events_history } = req.body;
+  const {
+    name,
+    surname,
+    email,
+    phone,
+    address,
+    password,
+    role,
+    events_history,
+  } = req.body;
   try {
     const createdUser = await registerUser(
       name,
       surname,
       email,
+      phone,
+      address,
       password,
       role,
       events_history

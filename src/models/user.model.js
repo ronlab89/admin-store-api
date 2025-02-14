@@ -22,6 +22,17 @@ const userSchema = new mongoose.Schema({
     lowercase: true,
     index: { unique: true },
   },
+  phone: {
+    type: String,
+    required: true,
+  },
+  address: {
+    addressline: { type: String },
+    city: { type: String },
+    province: { type: String },
+    country: { type: String },
+    default: {},
+  },
   password: {
     type: String,
     required: true,

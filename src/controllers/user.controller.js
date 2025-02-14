@@ -39,6 +39,8 @@ const update = async (req, res) => {
     name,
     surname,
     email,
+    phone,
+    address,
     role,
     events_history: {
       user_edited_at: { date, updating_user },
@@ -50,6 +52,8 @@ const update = async (req, res) => {
       name,
       surname,
       email,
+      phone,
+      address,
       role,
       date,
       updating_user,

@@ -39,6 +39,8 @@ const userUpdate = async (
   name,
   surname,
   email,
+  phone,
+  address,
   role,
   date,
   updating_user,
@@ -54,6 +56,8 @@ const userUpdate = async (
           name,
           surname,
           email,
+          phone,
+          address,
           role,
         },
         $push: {

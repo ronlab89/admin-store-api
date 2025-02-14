@@ -5,6 +5,8 @@ const registerUser = async (
   name,
   surname,
   email,
+  phone,
+  address,
   password,
   role,
   events_history
@@ -16,6 +18,8 @@ const registerUser = async (
       name,
       surname,
       email,
+      phone,
+      address,
       password,
       role,
       events_history,
