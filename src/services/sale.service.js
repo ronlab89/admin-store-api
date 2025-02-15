@@ -1,3 +1,4 @@
+import { Product } from "../models/product.model.js";
 import { Sale } from "../models/sale.model.js";
 
 const populateCustomer = {
@@ -63,6 +64,18 @@ const saleCreate = async (
   events_history
 ) => {
   try {
+    // check stock
+    for (const product of products) {
+      const { productId, quantity } = product;
+
+      const productData = await Product.findById(productId);
+      if (!productData || productData.stock < quantity) {
+        throw new Error(
+          `Stock insuficiente para el producto: ${productData?.name}`
+        );
+      }
+    }
+    // Make Sale
     const sale = new Sale({
       customerId,
       products,
@@ -71,6 +84,16 @@ const saleCreate = async (
       events_history,
     });
     await sale.save();
+
+    // Update Stock
+    for (const product of products) {
+      const { productId, quantity } = product;
+
+      await Product.findByIdAndUpdate(productId, {
+        $inc: { stock: -quantity }, // decrement stock
+      });
+    }
+    // Populate Sale
     const salePopulated = await Sale.findById(sale._id)
       .populate(populateUser)
       .populate(populateUserEditing)
@@ -78,9 +101,12 @@ const saleCreate = async (
       .populate(populateProducts)
       .populate(populatePaymentMethod)
       .lean();
+
+    // Return Sale
     return salePopulated;
   } catch (error) {
-    console.log(error.message);
+    console.error("Error al crear la venta:", error.message);
+    throw new Error(error.message || "Error al crear la venta");
   }
 };
 

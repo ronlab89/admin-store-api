@@ -1,3 +1,4 @@
+import { Product } from "../models/product.model.js";
 import { Purchase } from "../models/purchase.model.js";
 
 const populateSupplier = {
@@ -71,6 +72,17 @@ const purchaseCreate = async (
       events_history,
     });
     await purchase.save();
+
+    // Update Stock
+    for (const product of products) {
+      const { productId, quantity } = product;
+
+      // Increment stock
+      await Product.findByIdAndUpdate(productId, {
+        $inc: { stock: quantity },
+      });
+    }
+
     const purchasePopulated = await Purchase.findById(purchase._id)
       .populate(populateSupplier)
       .populate(populateProducts)
