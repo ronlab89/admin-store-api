@@ -17,7 +17,7 @@ const customerList = async () => {
       .lean(true);
     return allCustomers;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -32,7 +32,7 @@ const customerById = async (id) => {
     }
     return customer;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar el cliente por ID");
   }
 };
@@ -63,7 +63,7 @@ const customerCreate = async (
       .lean();
     return customerPopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -105,7 +105,7 @@ const customerUpdate = async (
       .lean();
     return customerPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -116,7 +116,7 @@ const customerRemove = async (id) => {
     const removeCustomer = await Customer.findByIdAndDelete(id);
     return removeCustomer;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

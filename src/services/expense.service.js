@@ -27,7 +27,7 @@ const expenseList = async () => {
       .lean(true);
     return allExpenses;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -44,7 +44,7 @@ const expenseById = async (id) => {
     }
     return expense;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar el gasto por ID");
   }
 };
@@ -73,7 +73,7 @@ const expenseCreate = async (
       .lean(true);
     return expensePopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -115,7 +115,7 @@ const expenseUpdate = async (
       .lean(true);
     return expensePopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -126,7 +126,7 @@ const expenseRemove = async (id) => {
     const removeExpense = await Expense.findByIdAndDelete(id);
     return removeExpense;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

@@ -33,7 +33,7 @@ const purchaseList = async () => {
       .lean(true);
     return allPurchases;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -51,7 +51,7 @@ const purchaseById = async (id) => {
     }
     return purchase;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar la compra por ID");
   }
 };
@@ -92,7 +92,7 @@ const purchaseCreate = async (
       .lean();
     return purchasePopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -135,7 +135,7 @@ const purchaseUpdate = async (
       .lean();
     return purchasePopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -146,7 +146,7 @@ const purchaseRemove = async (id) => {
     const removePurchase = await Purchase.findByIdAndDelete(id);
     return removePurchase;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

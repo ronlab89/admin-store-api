@@ -9,7 +9,7 @@ export const requireRefreshToken = (req, res, next) => {
     req.uid = uid;
     next();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(401)
       .send({ error: tokenVerificationErrors[error.message] });

@@ -18,6 +18,7 @@ import v1CustomerRouter from "./routes/customer.routes.js";
 import v1ProductCategoryRouter from "./routes/productCategory.routes.js";
 import v1PaymentMethodRouter from "./routes/paymentMethod.routes.js";
 import v1ExpenseCategoryRouter from "./routes/expenseCategory.routes.js";
+import v1DashboardRouter from "./routes/dashboard.routes.js";
 
 const app = express();
 const server = createServer(app);
@@ -62,6 +63,7 @@ app.use("/api/v1/customers", v1CustomerRouter);
 app.use("/api/v1/product-category", v1ProductCategoryRouter);
 app.use("/api/v1/payment-method", v1PaymentMethodRouter);
 app.use("/api/v1/expense-category", v1ExpenseCategoryRouter);
+app.use("/api/v1/dashboard", v1DashboardRouter);
 
 setupSocket(io);
 

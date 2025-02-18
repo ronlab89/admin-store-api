@@ -11,7 +11,7 @@ const list = async (req, res) => {
     const allProducts = await productList();
     return res.status(200).json({ allProducts });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.message });
@@ -28,7 +28,7 @@ const product = async (req, res) => {
     }
     return res.status(200).json({ product });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.message });
@@ -55,7 +55,7 @@ const create = async (req, res) => {
       supplier,
       events_history
     );
-    console.log({ created });
+    // console.log({ created });
     if (created === "Exists")
       throw new Error("Ya existe este producto en la base de datos");
     return res.status(201).json({
@@ -64,7 +64,7 @@ const create = async (req, res) => {
       data: created,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ error, message: error.message });
   }
 };
@@ -102,7 +102,7 @@ const update = async (req, res) => {
       updated,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(400).json({ error: error.message });
   }
 };
@@ -121,7 +121,7 @@ const remove = async (req, res) => {
       deleted,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(400).json({ error: error.message });
   }
 };

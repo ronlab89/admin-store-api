@@ -18,7 +18,7 @@ const userList = async () => {
       .lean(true);
     return allUsers;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -34,7 +34,7 @@ const userById = async (id) => {
     }
     return user;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar el usuario por ID");
   }
 };
@@ -80,7 +80,7 @@ const userUpdate = async (
       .lean();
     return userPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -91,7 +91,7 @@ const userRemove = async (id) => {
     const removeUser = await User.findByIdAndDelete(id);
     return removeUser;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

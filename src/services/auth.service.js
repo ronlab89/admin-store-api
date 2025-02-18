@@ -42,7 +42,7 @@ const registerUser = async (
       .lean();
     return userWithoutPassword;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -56,7 +56,7 @@ const loginUser = async (email, password, res) => {
     refreshTokenGenerate(user._id, res);
     return { email: user.email, token, expiresIn };
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -70,7 +70,7 @@ const infoUser = async (req) => {
       .lean();
     return user;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -79,7 +79,7 @@ const refreshToken = (req) => {
     const { token, expiresIn } = tokenGenerate(req.uid);
     return { token, expiresIn };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

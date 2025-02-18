@@ -11,7 +11,7 @@ const list = async (req, res) => {
     const allCustomers = await customerList();
     return res.status(200).json({ allCustomers });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.message });
@@ -28,7 +28,7 @@ const customer = async (req, res) => {
     }
     return res.status(200).json({ customer });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.message });
@@ -54,7 +54,7 @@ const create = async (req, res) => {
       data: created,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ error, message: error.message });
   }
 };
@@ -92,7 +92,7 @@ const update = async (req, res) => {
       updated,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(400).json({ error: error.message });
   }
 };
@@ -111,7 +111,7 @@ const remove = async (req, res) => {
       deleted,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res.status(400).json({ error: error.message });
   }
 };

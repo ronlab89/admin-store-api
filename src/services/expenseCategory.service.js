@@ -17,7 +17,7 @@ const expenseCategoryList = async () => {
       .lean(true);
     return allExpenseCategorys;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -32,7 +32,7 @@ const expenseCategoryById = async (id) => {
     }
     return expenseCategory;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar la categoria de gasto por ID");
   }
 };
@@ -55,7 +55,7 @@ const expenseCategoryCreate = async (name, description, events_history) => {
       .lean();
     return expenseCategoryPopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -93,7 +93,7 @@ const expenseCategoryUpdate = async (
       .lean();
     return expenseCategoryPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -104,7 +104,7 @@ const expenseCategoryRemove = async (id) => {
     const removeExpenseCategory = await ExpenseCategory.findByIdAndDelete(id);
     return removeExpenseCategory;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

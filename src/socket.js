@@ -3,7 +3,7 @@ import { Product } from "./models/product.model.js";
 
 export default function setupSocket(io) {
   io.on("connection", (socket) => {
-    console.log("Nuevo cliente conectado");
+    // console.log("Nuevo cliente conectado");
 
     const populateCategory = {
       path: "category",
@@ -40,13 +40,13 @@ export default function setupSocket(io) {
         const updatedProducts = await Product.find();
         io.emit("stockUpdated", updatedProducts);
       } catch (error) {
-        console.error("Error al actualizar el stock:", error);
+        // console.error("Error al actualizar el stock:", error);
       }
     });
 
     // Manejar desconexión
     socket.on("disconnect", () => {
-      console.log("Cliente desconectado");
+      // console.log("Cliente desconectado");
     });
   });
 }

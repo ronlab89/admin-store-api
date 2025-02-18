@@ -17,7 +17,7 @@ const productCategoryList = async () => {
       .lean(true);
     return allProductCategorys;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -32,7 +32,7 @@ const productCategoryById = async (id) => {
     }
     return productCategory;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar la categoria de producto por ID");
   }
 };
@@ -55,7 +55,7 @@ const productCategoryCreate = async (name, description, events_history) => {
       .lean();
     return productCategoryPopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -93,7 +93,7 @@ const productCategoryUpdate = async (
       .lean();
     return productCategoryPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -104,7 +104,7 @@ const productCategoryRemove = async (id) => {
     const removeProductCategory = await ProductCategory.findByIdAndDelete(id);
     return removeProductCategory;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

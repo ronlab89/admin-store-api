@@ -17,7 +17,7 @@ const paymentMethodList = async () => {
       .lean(true);
     return allPaymentMethods;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -32,7 +32,7 @@ const paymentMethodById = async (id) => {
     }
     return paymentMethod;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar el metodo de pago por ID");
   }
 };
@@ -55,7 +55,7 @@ const paymentMethodCreate = async (name, description, events_history) => {
       .lean();
     return paymentMethodPopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -93,7 +93,7 @@ const paymentMethodUpdate = async (
       .lean();
     return paymentMethodPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -104,7 +104,7 @@ const paymentMethodRemove = async (id) => {
     const removePaymentMethod = await PaymentMethod.findByIdAndDelete(id);
     return removePaymentMethod;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

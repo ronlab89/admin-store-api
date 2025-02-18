@@ -17,7 +17,7 @@ const supplierList = async () => {
       .lean(true);
     return allSuppliers;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -32,7 +32,7 @@ const supplierById = async (id) => {
     }
     return supplier;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar el proveedor por ID");
   }
 };
@@ -54,7 +54,7 @@ const supplierCreate = async (name, contactInfo, address, events_history) => {
       .lean();
     return supplierPopulated;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -92,7 +92,7 @@ const supplierUpdate = async (
       .lean();
     return supplierPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -103,7 +103,7 @@ const supplierRemove = async (id) => {
     const removeSupplier = await Supplier.findByIdAndDelete(id);
     return removeSupplier;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

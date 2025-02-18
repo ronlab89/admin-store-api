@@ -73,7 +73,7 @@ userSchema.pre("save", async function (next) {
     user.password = await bcrypt.hash(user.password, salt);
     next();
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al codificar la contraseña");
   }
 });

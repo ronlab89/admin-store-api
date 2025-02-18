@@ -36,7 +36,7 @@ const register = async (req, res) => {
       data: createdUser,
     });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     res.status(400).json({ error, message: error.message });
   }
 };
@@ -56,7 +56,7 @@ const login = async (req, res) => {
         .json({ param: "password", error: "La contraseña es incorrecta." });
     return res.json(logged);
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.message });
@@ -68,7 +68,7 @@ const info = async (req, res) => {
     const userLogged = await infoUser(req);
     return res.status(200).json({ userLogged });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.message });
@@ -80,7 +80,7 @@ const refresh = async (req, res) => {
     const refresh = await refreshToken(req);
     return res.status(200).json({ refresh });
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     return res
       .status(500)
       .json({ error: "Error de servidor", message: error.mesage });

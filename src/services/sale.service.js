@@ -33,7 +33,7 @@ const saleList = async () => {
       .lean(true);
     return allSales;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -51,7 +51,7 @@ const saleById = async (id) => {
     }
     return sale;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar la venta por ID");
   }
 };
@@ -105,7 +105,7 @@ const saleCreate = async (
     // Return Sale
     return salePopulated;
   } catch (error) {
-    console.error("Error al crear la venta:", error.message);
+    // console.error("Error al crear la venta:", error.message);
     throw new Error(error.message || "Error al crear la venta");
   }
 };
@@ -149,7 +149,7 @@ const saleUpdate = async (
       .lean();
     return salePopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -160,7 +160,7 @@ const saleRemove = async (id) => {
     const removeSale = await Sale.findByIdAndDelete(id);
     return removeSale;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 

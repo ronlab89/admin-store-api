@@ -6,7 +6,7 @@ export const tokenGenerate = (uid) => {
     const token = jwt.sign({ uid }, process.env.JWT_SECRET, { expiresIn });
     return { token, expiresIn };
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -28,7 +28,7 @@ export const refreshTokenGenerate = (uid, res) => {
       path: "/",
     });
   } catch (error) {
-    console.error("Error al generar el refresh token:", error);
+    // console.error("Error al generar el refresh token:", error);
     res.status(500).json({ ok: false, message: "Error interno del servidor" });
   }
 };

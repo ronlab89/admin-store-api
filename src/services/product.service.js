@@ -22,7 +22,7 @@ const productList = async () => {
       .lean(true);
     return allProducts;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -38,7 +38,7 @@ const productById = async (id) => {
     }
     return product;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
     throw new Error("Error al buscar el producto por ID");
   }
 };
@@ -72,7 +72,7 @@ const productCreate = async (
       .lean(true);
     return productUpdate;
   } catch (error) {
-    console.log(error.message);
+    // console.log(error.message);
   }
 };
 
@@ -115,7 +115,7 @@ const productUpdate = async (
       .lean(true);
     return productPopulated;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
@@ -126,7 +126,7 @@ const productRemove = async (id) => {
     const removeProduct = await Product.findByIdAndDelete(id);
     return removeProduct;
   } catch (error) {
-    console.log(error);
+    // console.log(error);
   }
 };
 
